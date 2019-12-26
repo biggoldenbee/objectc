@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="StageTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="stage_pic_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="fbX-Jx-QCh">
+                        <rect key="frame" x="0.0" y="1" width="320" height="89"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stage_line_a.png" translatesAutoresizingMaskIntoConstraints="NO" id="Cek-BN-aWO">
+                        <rect key="frame" x="37" y="1" width="2" height="40"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stage_line_a.png" translatesAutoresizingMaskIntoConstraints="NO" id="dkZ-ee-MJ2">
+                        <rect key="frame" x="37" y="49" width="2" height="40"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stage_line_b.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Ak-sa-OdS">
+                        <rect key="frame" x="34" y="40" width="9" height="9"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stage_line_c.png" translatesAutoresizingMaskIntoConstraints="NO" id="7MM-xI-Yja">
+                        <rect key="frame" x="20" y="26" width="36" height="36"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="base_select_a.png" translatesAutoresizingMaskIntoConstraints="NO" id="k7o-Op-EMs">
+                        <rect key="frame" x="20" y="26" width="36" height="36"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stage_line_ring.png" translatesAutoresizingMaskIntoConstraints="NO" id="fN5-5S-7TR">
+                        <rect key="frame" x="18" y="23" width="40" height="40"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stage Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zf3-rr-Tyd">
+                        <rect key="frame" x="66" y="28" width="72" height="16"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                        <color key="textColor" red="0.99215686274509807" green="0.56470588235294117" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Monster Level:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dG1-79-isV">
+                        <rect key="frame" x="66" y="45" width="72" height="16"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                        <color key="textColor" red="0.99215686274509807" green="0.56470588235294117" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dix-ps-OeK">
+                        <rect key="frame" x="139" y="45" width="42" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.99215686274509807" green="0.56470588235294117" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stage_button1.png" translatesAutoresizingMaskIntoConstraints="NO" id="ohM-gm-2u0">
+                        <rect key="frame" x="192" y="19" width="53" height="53"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1As-Q3-DKf">
+                        <rect key="frame" x="207" y="56" width="22" height="10"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <color key="textColor" red="0.83137254901960789" green="0.0039215686274509803" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q5Z-73-sib">
+                        <rect key="frame" x="199" y="26" width="36" height="36"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="stage_enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="oyA-Kj-OhX">
+                        <rect key="frame" x="186" y="17" width="64" height="64"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="fbX-Jx-QCh" secondAttribute="bottom" id="V40-wH-Ckf"/>
+                    <constraint firstItem="fbX-Jx-QCh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="key-oW-zU6"/>
+                    <constraint firstAttribute="trailing" secondItem="fbX-Jx-QCh" secondAttribute="trailing" id="quG-3M-dZt"/>
+                    <constraint firstItem="fbX-Jx-QCh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xHX-Dq-5Gi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="animationView" destination="Q5Z-73-sib" id="g6g-Ml-Onz"/>
+                <outlet property="stageCellActiveBgImage" destination="ohM-gm-2u0" id="9W4-66-mji"/>
+                <outlet property="stageCellActiveImage" destination="oyA-Kj-OhX" id="N0Q-X7-QFY"/>
+                <outlet property="stageCellBgImage" destination="fbX-Jx-QCh" id="ayf-Bw-xcC"/>
+                <outlet property="stageCellEffectImage" destination="fN5-5S-7TR" id="SKo-mh-2bo"/>
+                <outlet property="stageCellNoRewardImage" destination="1Ak-sa-OdS" id="VUh-aY-xAX"/>
+                <outlet property="stageCellRewardBgImage" destination="7MM-xI-Yja" id="V3n-YG-mIh"/>
+                <outlet property="stageCellRewardImage" destination="k7o-Op-EMs" id="nee-f2-tWZ"/>
+                <outlet property="stageEnterLabel" destination="1As-Q3-DKf" id="7Fv-df-rDI"/>
+                <outlet property="stageMobLvLabel" destination="dix-ps-OeK" id="AcA-4u-yNR"/>
+                <outlet property="stageMobLvTextLabel" destination="dG1-79-isV" id="YO9-Bx-oAY"/>
+                <outlet property="stageNameLabel" destination="zf3-rr-Tyd" id="bky-PH-dOF"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="111"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="base_select_a.png" width="35" height="36"/>
+        <image name="stage_button1.png" width="53" height="53"/>
+        <image name="stage_enter.png" width="64" height="64"/>
+        <image name="stage_line_a.png" width="2" height="8"/>
+        <image name="stage_line_b.png" width="8" height="8"/>
+        <image name="stage_line_c.png" width="36" height="36"/>
+        <image name="stage_line_ring.png" width="40" height="40"/>
+        <image name="stage_pic_01.png" width="290" height="90"/>
+    </resources>
+</document>

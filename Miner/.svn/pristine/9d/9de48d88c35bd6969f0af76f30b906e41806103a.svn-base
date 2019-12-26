@@ -1,0 +1,25 @@
+//
+//  StoreCollectionViewCell.h
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/19.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface StoreCollectionViewCell : UICollectionViewCell
+@property (strong, nonatomic) IBOutlet UIImageView *itemPropsBar;
+@property (strong, nonatomic) IBOutlet UIImageView *itemIcon;
+@property (strong, nonatomic) IBOutlet UILabel *itemPropsName;
+@property (strong, nonatomic) IBOutlet UIImageView *itemBaseShadow;
+@property (strong, nonatomic) IBOutlet UIImageView *itemBaseIcon;
+@property (strong, nonatomic) IBOutlet UILabel *itemPrice;
+@property (strong, nonatomic) IBOutlet UIButton *itemBuy;
+
+-(void)setDataWithObject:(NSString *)itemPropsBarName
+            itemIconName:(NSString *)itemIconName
+           itemPropsName:(NSString *)itemPropsName
+          itemPriceValue:(NSInteger)itemPriceValue;
+
+@end

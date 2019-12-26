@@ -1,0 +1,27 @@
+//
+//  QQEquipBtnSelected.h
+//  Miner
+//
+//  Created by zhihua.qian on 14-12-23.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface QQEquipBtnSelected : UIView
+
+@property (strong, nonatomic) IBOutlet UIImageView *stateIcon;
+@property (strong, nonatomic) IBOutlet UIButton *selectedIcon;
+@property (strong, nonatomic) IBOutlet UILabel *levelLabel;
+@property (strong, nonatomic) IBOutlet UILabel *textLvLabel;
+
+@property (nonatomic, strong) NSNumber* btnType;
+@property (nonatomic, strong) NSNumber* petId;
+@property (nonatomic, assign) BOOL isOKForUpgrade;
+
+-(void)setStateType:(int)type;
+
+-(void)setEquipDataWithIdentifier:(NSNumber*)equipId;
+-(void)setItemDataWithTId:(NSNumber*)itemTId countNum:(NSInteger)num;
+-(void)setStateIconHidden:(BOOL)isHidden;
+@end

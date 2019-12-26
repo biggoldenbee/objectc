@@ -1,0 +1,59 @@
+//
+//  BuffConfig.h
+//  Miner
+//
+//  Created by zhihua.qian on 14-11-13.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "BaseDBReader.h"
+#import <UIKit/UIKit.h>
+
+@interface BuffBase : NSObject
+
+@property (nonatomic, copy)   NSString  *buffName;      // 名称
+@property (nonatomic, copy)   NSString  *buffDesc;      // 描述
+@property (nonatomic, copy)   NSString  *buffIcon;      // 图标
+@property (nonatomic, assign) NSInteger buffLV;         // buff等级
+@property (nonatomic, assign) NSInteger buffType;       // 状态性质：1 增；2 减
+@property (nonatomic, assign) NSInteger attriId1;        // 属性性质
+@property (nonatomic, assign) NSInteger attriNum1;       // 属性数值
+@property (nonatomic, assign) NSInteger attriId2;        // 属性性质
+@property (nonatomic, assign) NSInteger attriNum2;       // 属性数值
+@property (nonatomic, assign) NSInteger buffMultiLimit; // 叠加次数上限
+@property (nonatomic, assign) NSInteger bTimeType;      // 时间计算方法：1 战斗内；2 战斗外
+@property (nonatomic, assign) NSInteger instantEffect;  // 是否立即生效
+@property (nonatomic, assign) NSInteger effectHappen;   // 生效时机：1 永久；2 攻击； 3被攻击； 4 死亡
+@property (nonatomic, assign) NSInteger buffLast;       // 持续回合：-1 永久
+@property (nonatomic, assign) NSInteger buffTurn;       // 生效间隔：0 一直；非0 回合数
+@property (nonatomic, assign) NSInteger buffNewGet;     // buff触发时机：1 死亡；2 被攻击； 3 主动攻击
+@property (nonatomic, assign) NSInteger buffNewChance;  // 新buff触发几率
+@property (nonatomic, assign) NSInteger buffNewId;      // 触发buffid
+@property (nonatomic, assign) NSInteger buffNewLv;      // 触发buffLv
+@property (nonatomic, assign) NSInteger logFontSize;
+@property (nonatomic, strong) UIColor*  logFontColor;
+@property (nonatomic, assign) NSInteger animaFontSize;
+@property (nonatomic, strong) UIColor*  animaFontColor;
+
+@end
+
+@interface BuffDef : NSObject
+
+@property (nonatomic, assign) NSInteger buffId;         // id
+@property (nonatomic, strong) NSDictionary* buffDatas;  // buff等级数据
+
+-(BOOL)addBuffBaseIntoBuffDatas:(BuffBase*)base;
+@end
+
+//
+// 读取buff.dat文件
+//
+@interface BuffConfig : BaseDBReader
+{
+    NSMutableDictionary *Definitions;
+}
+
++(BuffConfig *)share;
+-(BuffBase*) getBuffBaseWithTId:(NSNumber*)bid withLevel:(NSNumber*)blv;
+
+@end

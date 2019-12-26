@@ -1,0 +1,19 @@
+//
+//  QQEquipBtnDefault.h
+//  Miner
+//
+//  Created by zhihua.qian on 14-12-23.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface QQEquipBtnDefault : UIView
+
+@property (strong, nonatomic) IBOutlet UIButton *defaultIcon;
+
+@property (nonatomic, strong) NSNumber* btnType;        // 部位代号
+@property (nonatomic, strong) NSNumber* petId;
+
+-(void)setStateType:(int)type;   //
+@end

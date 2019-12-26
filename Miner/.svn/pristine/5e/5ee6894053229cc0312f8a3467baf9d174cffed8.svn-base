@@ -1,0 +1,17 @@
+﻿//
+//  BriefPropsTableViewCell.h
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/7.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface BriefPropsTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *propsLabelText;
+
+-(void)setDataWithItems:(NSArray*)items equips:(NSArray*)equips boxs:(NSArray*)boxs autoSells:(NSArray*)autoSells;
+
+@end
+  

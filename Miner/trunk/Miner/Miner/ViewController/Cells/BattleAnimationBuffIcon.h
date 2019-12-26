@@ -1,0 +1,27 @@
+//
+//  BattleAnimationBuffIcon.h
+//  Miner
+//
+//  Created by jim kaden on 15/1/6.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface BattleAnimationBuffIcon : UIView
+{
+    int _buffID;
+    int _buffLV;
+    int _count;
+}
+@property (nonatomic, assign) int buffID;
+@property (nonatomic, assign) int count;
+
+@property (weak) IBOutlet UILabel* labelCount;
+@property (weak) IBOutlet UIImageView* imageIcon;
++(BattleAnimationBuffIcon*)create:(UIView*)owner buff:(int)buff buffLv:(int)lv;
+-(int)changeCount:(int)cnt;
+-(void)refresh;
+-(void)resetCount;
+-(void)clearCount;
+@end

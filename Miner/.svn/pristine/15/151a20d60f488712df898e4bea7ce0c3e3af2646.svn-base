@@ -1,0 +1,53 @@
+//
+//  BattleAnimationHpChange.m
+//  Miner
+//
+//  Created by jim kaden on 15/1/6.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import "BattleAnimationHpChange.h"
+
+@implementation BattleAnimationHpChange
+
++(BattleAnimationHpChange*)create:(id)owner hp:(int)hp critical:(BOOL)critical
+{
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"BattleAnimationHpChange" owner:owner options:nil];
+    BattleAnimationHpChange* view = (BattleAnimationHpChange*)[array objectAtIndex:0];
+    [view setHp:hp critical:critical];
+    return view;
+}
+
+-(void)setHp:(int)hp critical:(BOOL)cirtical
+{
+    NSString* hpText = nil;
+    UIColor* color = nil;
+    if ( hp > 0 )
+    {
+        hpText = [NSString stringWithFormat:@"+%d", hp];
+        color = [UIColor greenColor];
+    }
+    else
+    {
+        hpText = [NSString stringWithFormat:@"-%d", -hp];
+        color = [UIColor redColor];
+    }
+    
+    NSShadow* ss = [[NSShadow alloc] init];
+    ss.shadowOffset = CGSizeMake(1,3);
+    ss.shadowBlurRadius = 2;
+    ss.shadowColor = [UIColor blackColor];
+    
+    NSAttributedString* string = [[NSAttributedString alloc]initWithString:hpText
+                                                                attributes:@{
+                                                                             NSFontAttributeName : self.labelHp.font,
+                                                                             NSForegroundColorAttributeName : color,
+                                                                             NSShadowAttributeName : ss,
+                                                                             NSVerticalGlyphFormAttributeName : @0,
+                                                                             NSStrokeColorAttributeName : [UIColor blackColor],
+                                                                             NSStrokeWidthAttributeName : @-3,
+                                                                             }];
+    self.labelHp.attributedText = string;
+}
+
+@end

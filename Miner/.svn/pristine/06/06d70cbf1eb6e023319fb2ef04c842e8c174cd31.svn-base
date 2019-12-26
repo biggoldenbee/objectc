@@ -1,0 +1,203 @@
+//
+//  BriefPropsTableViewCell.m
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/7.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import "BriefPropsTableViewCell.h"
+
+#import "GameUtility.h"
+#import "BattleData.h"
+#import "BriefItemTableViewCell.h"
+
+#import "Item.h"
+#include "Equipment.h"
+
+#define Brief_Max_Row_Icons     4
+
+#define Brief_Component_Y       48.0f
+#define Brief_Item_Icon_W       75.0f
+#define Brief_Item_Icon_H       76.0f
+
+@interface BriefPropsTableViewCell()
+
+@property (nonatomic, strong) NSArray *theAutoSellPropsColor;
+@property (nonatomic, strong) NSArray *theAutoSellPropsColorName;
+@property (nonatomic, strong) NSMutableArray* theAutoSellsProps;
+
+@property (nonatomic, strong) UIImageView* baseLine;
+@property (nonatomic, strong) NSMutableArray* theItemIcons;
+@property (nonatomic, assign) CGFloat theCurentHeight;
+
+//@property (nonatomic, strong) UILabel *autoSellText;
+
+@end
+
+@implementation BriefPropsTableViewCell
+
+-(void)initilizingComponents {
+    // Initialization code
+    // 产生所有的autoSells Label
+    for(int i=0; i<5; i++) {
+        UILabel *briefAutoSellsLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,60,300,15)];
+        
+        briefAutoSellsLabel.font = [UIFont systemFontOfSize:12] ;
+        briefAutoSellsLabel.text = @"Auto sells the white Props x11" ;
+        briefAutoSellsLabel.textAlignment = NSTextAlignmentCenter;
+        briefAutoSellsLabel.textColor = [self.theAutoSellPropsColor objectAtIndex:i] ;
+
+        // 隐藏所有的Label
+        [briefAutoSellsLabel setHidden:TRUE] ;
+        [self.theAutoSellsProps addObject:briefAutoSellsLabel];
+        [self.contentView addSubview:briefAutoSellsLabel];
+    }
+    // 产生baseline
+    self.baseLine = [[UIImageView alloc] initWithFrame:CGRectMake(10,83,300,1)] ;
+    self.baseLine.image = [GameUtility imageNamed:@"base_line2.png"] ;
+    [self.contentView addSubview:self.baseLine] ;
+  
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+    self.theAutoSellPropsColor = [[NSArray alloc] initWithObjects:  [UIColor whiteColor],
+                                      [UIColor blueColor],
+                                      [UIColor greenColor],
+                                      [UIColor redColor],
+                                      [UIColor purpleColor],
+                                      nil];
+
+    self.theAutoSellPropsColorName = [[NSArray alloc] initWithObjects:  @"white",
+                                      @"blue",
+                                      @"green",
+                                      @"red",
+                                      @"puple",
+                                      nil];
+    self.theItemIcons = [[NSMutableArray alloc] init];
+    self.theAutoSellsProps = [[NSMutableArray alloc] init];
+    self.theCurentHeight = self.frame.size.height;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+-(void)setDataWithItems:(NSArray*)items equips:(NSArray*)equips boxs:(NSArray*)boxs autoSells:(NSArray*)autoSells; {
+    // 初次进行初始化操作
+    if ([self.theItemIcons count]<=0) {
+        [self initilizingComponents];
+    }
+    
+    // 设置与计算icon的间距和坐标偏移
+    CGFloat spaceSize = ([UIScreen mainScreen].bounds.size.width-20)/4;
+    CGFloat offsetX = (spaceSize-Brief_Item_Icon_W)/2;
+    if (offsetX<0) offsetX = 0;
+    // 移除所有的icons
+    for (int i=0; i<[self.theItemIcons count]; i++) {
+        BriefItemTableViewCell *itemIcon = [self.theItemIcons objectAtIndex:i];
+        [itemIcon setHidden:TRUE];
+        [itemIcon removeFromSuperview];
+    }
+
+    // 设置view初始的高度为Brief_Component_Y
+    CGFloat theViewHeight = Brief_Component_Y;
+    CGRect rect ;
+    NSInteger nIconIndex = 0;
+
+    // 遍历items
+    for(NSInteger i=0; i<[items count]; i++) {
+        Item *item = [items objectAtIndex:i];
+        if (nil!=item) {
+            // 产生新icon
+            BriefItemTableViewCell *itemIcon = [[BriefItemTableViewCell alloc] init];
+            itemIcon.frame = CGRectMake(offsetX+spaceSize*(nIconIndex%Brief_Max_Row_Icons),
+                Brief_Component_Y+(Brief_Item_Icon_H+10.0)*(nIconIndex/Brief_Max_Row_Icons),
+                Brief_Item_Icon_W,
+                Brief_Item_Icon_H);
+            
+            // 更新icon和数量
+            [itemIcon setDataWithIcon:[GameUtility imageNamed:item.itemIcon] count:item.itemCount];
+            // 更新底图
+            [itemIcon setDataWithBaseImage:[GameUtility imageNamed:@"base_propsbar2_1.png"] type:[NSNumber numberWithInt:0]] ;
+            
+            nIconIndex++;
+
+            [self.theItemIcons addObject:itemIcon] ;
+            [self.contentView addSubview:itemIcon] ;
+        }
+    }
+    // 遍历equips
+    for(NSInteger i=0; i<[equips count]; i++) {
+        Equipment *item = [equips objectAtIndex:i];
+        if (nil!=item) {
+            // 产生新icon
+            BriefItemTableViewCell *itemIcon = [[BriefItemTableViewCell alloc] init];
+            itemIcon.frame = CGRectMake(offsetX+spaceSize*(nIconIndex%Brief_Max_Row_Icons),
+                Brief_Component_Y+(Brief_Item_Icon_H+10.0)*(nIconIndex/Brief_Max_Row_Icons),
+                Brief_Item_Icon_W,
+                Brief_Item_Icon_H);
+
+            // 装备默认数量都是1
+            [itemIcon setDataWithIcon:[GameUtility imageNamed:item.equipIcon] count:[NSNumber numberWithInt:1]];
+            // 设置装备星级底图
+            [itemIcon setDataWithBaseImage:[GameUtility imageNamed:[GameUtility getImageNameForBagOrSelectViewWithStar:[[item equipStar] intValue]]] type:[NSNumber numberWithInt:1]] ;
+            nIconIndex++;
+
+            [self.theItemIcons addObject:itemIcon] ;
+            [self.contentView addSubview:itemIcon] ;
+        }
+    }
+    // 遍历boxes,现在还没实现
+
+    // 更新theViewHeight的值
+    NSInteger itemLines = 0 ;
+    // 根据实际产生的icon计算实际高度
+    if (nIconIndex>0)
+        itemLines = (nIconIndex-1)/Brief_Max_Row_Icons+1;
+    theViewHeight = theViewHeight+(Brief_Item_Icon_H+10)*itemLines;
+    
+    // 设置所有的autoSells
+    for(int i=0; i<5; i++) {
+        UILabel *briefAutoSellsLabel = [self.theAutoSellsProps objectAtIndex:i];
+        [briefAutoSellsLabel setHidden:TRUE];
+
+        if (i<[autoSells count]) {
+            NSNumber *sellsCount = [autoSells objectAtIndex:i];
+            if ([sellsCount intValue]>0) {
+                briefAutoSellsLabel.text = [NSString stringWithFormat:@"Auto sells the %@ Props X%d",
+                                            [self.theAutoSellPropsColorName objectAtIndex:i],
+                                            [sellsCount intValue]];
+                rect = CGRectMake(20,theViewHeight,280,15);
+                briefAutoSellsLabel.frame = rect;
+                [briefAutoSellsLabel setHidden:FALSE];
+                theViewHeight = theViewHeight+15;
+                NSLog(@"%@ [%f,%f,%f,%f]\n", briefAutoSellsLabel.text,
+                      briefAutoSellsLabel.frame.origin.x,
+                      briefAutoSellsLabel.frame.origin.y,
+                      briefAutoSellsLabel.frame.size.width,
+                      briefAutoSellsLabel.frame.size.height
+                      ) ;
+            }
+        }
+    }
+    
+    // 设置最后高度
+    theViewHeight = theViewHeight+12;
+
+    // 设置view的高度
+    rect = self.frame;
+    rect.size.height = theViewHeight;
+    self.frame = rect;
+
+    // 设置baseLine的位置
+    self.baseLine.frame = CGRectMake(10,self.frame.size.height-1,[UIScreen mainScreen].bounds.size.width-20,1);
+
+    // 保存view的高度到the
+    self.theCurentHeight = theViewHeight;
+}
+
+@end

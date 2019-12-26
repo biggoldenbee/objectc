@@ -1,0 +1,16 @@
+//
+//  HpCharactorBinParser.h
+//  HpAnimaTestMeragerOnCocoa
+//
+//  Created by zhou gang on 14/12/24.
+//  Copyright (c) 2014年 zhou gang. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "HpAnimVisitor.h"
+
+@interface HpCharactorBinParser : NSObject<HpAnimParser>
+
+-(id)parse:(NSString*)chrfile;
+
+@end

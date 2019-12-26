@@ -1,0 +1,122 @@
+//
+//  QQEquipBtnSelected.m
+//  Miner
+//
+//  Created by zhihua.qian on 14-12-23.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "QQEquipBtnSelected.h"
+#import "Equipment.h"
+#import "Item.h"
+#import "GameUtility.h"
+#import "GameUI.h"
+#import "GameObject.h"
+
+@interface QQEquipBtnSelected ()
+
+@property (nonatomic, strong) NSNumber* equipId;
+@property (nonatomic, strong) NSNumber* itemId;
+
+@end
+
+@implementation QQEquipBtnSelected
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+-(void)setStateType:(int)type;
+{
+    self.btnType = [[NSNumber alloc] initWithInt:type];
+}
+
+-(void)setEquipDataWithIdentifier:(NSNumber*)equipId
+{
+    [self setStateIconHidden:YES];
+    self.isOKForUpgrade = NO;
+    self.equipId        = equipId;
+    Equipment* equip    = [[GameObject sharedInstance] getEquipWithIdentifier:equipId];
+    
+    // level
+    self.levelLabel.textColor   = [GameUtility getColorWithStar:[[equip equipStar] intValue]];
+    NSString* level             = [[[equip mainAttri] attriLevel] stringValue];
+    self.levelLabel.text        = [NSString stringWithFormat:@"Lv. %@", level];
+    
+    // bg image
+    int starNum             = [[equip equipStar] intValue];
+    NSString* backImageName = [GameUtility getImageNameForEquipStrengthenWithStar:starNum];
+    UIImage* background     = [GameUtility imageNamed:backImageName];
+    [self.selectedIcon setBackgroundImage:background forState:UIControlStateNormal];
+
+    // icon image
+    UIImage* equipIcon = [GameUtility imageNamed:[equip getEquipIcon]];
+    [self.selectedIcon setImage:equipIcon forState:UIControlStateNormal];
+}
+
+-(void)setItemDataWithTId:(NSNumber*)itemTId countNum:(NSInteger)num
+{
+    [self setStateIconHidden:YES];
+    
+    self.itemId         = itemTId;
+    NSInteger needNum   = num;
+    NSInteger curNum    = 0;
+    Item* item          = [[[GameObject sharedInstance] bag] getItemWithTId:itemTId];
+    if (item != nil)
+    {
+        // 当前拥有量
+        curNum = [[item itemCount] integerValue];
+    }
+    
+    if (needNum <= curNum)
+    {// 足够
+        self.isOKForUpgrade = YES;
+    }
+    else
+    {// 不够
+        self.isOKForUpgrade = NO;
+    }
+    
+    // 数量显示
+    NSString* strNeedNum    = [NSString stringWithFormat:@"%lu", needNum];
+    NSString* strCurNum     = [NSString stringWithFormat:@"%lu", curNum];
+    if ([self isOKForUpgrade])
+    {
+        self.levelLabel.textColor = [UIColor greenColor];
+    }
+    else
+    {
+        self.levelLabel.textColor = [UIColor redColor];
+    }
+    self.levelLabel.text = [NSString stringWithFormat:@"%@ / %@", strCurNum, strNeedNum];
+    
+    // 道具图片
+    ItemDef* itemDef = [[ItemConfig share] getItemDefWithKey:itemTId];
+    UIImage* itemIcon = [GameUtility imageNamed:[itemDef itemIcon]];
+    [self.selectedIcon setImage:itemIcon forState:UIControlStateNormal];
+}
+
+-(void)setStateIconHidden:(BOOL)isHidden
+{
+    [self.stateIcon setHidden:isHidden];
+}
+
+// 当装备的时候，点击效果
+- (IBAction)onShowEquipInfoClicked:(id)sender
+{
+    if ([self.btnType integerValue] >= 10)
+    {
+        return;
+    }
+    
+    NSMutableDictionary* tempDict = [[NSMutableDictionary alloc]init];
+    [tempDict setObject:self.equipId forKey:@"EquipId"];
+    [tempDict setObject:self.petId forKey:@"PetId"];
+    
+    [[GameUI sharedInstance] showEquipInfoView:tempDict];
+}
+@end

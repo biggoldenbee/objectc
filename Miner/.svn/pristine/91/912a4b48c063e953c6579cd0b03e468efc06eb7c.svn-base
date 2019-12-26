@@ -1,0 +1,209 @@
+//
+//  EquipmentViewController.m
+//  Miner
+//
+//  Created by zhihua.qian on 14-11-4.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "EquipViewController.h"
+#import "Equipment.h"
+#import "StringConfig.h"
+#import "GameObject.h"
+#import "GameUI.h"
+#import "QQEquipBtnDefault.h"
+#import "QQEquipBtnSelected.h"
+#import "UtilityDef.h"
+#import "BaseAttribute.h"
+
+#define Part_Button_Xib     @"QQEquipBtnView"
+
+@interface EquipViewController ()
+
+@property (nonatomic, weak) Hero* player;
+@property (nonatomic, strong) NSMutableDictionary* partViewDict;
+
+@end
+
+@implementation EquipViewController
+#pragma mark - init
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self.attriIcon01 setAttriID:1];
+    [self.attriIcon02 setAttriID:2];
+    [self.attriIcon03 setAttriID:3];
+    [self.attriIcon04 setAttriID:4];
+    [self.attriIcon05 setAttriID:5];
+    [self.attriIcon06 setAttriID:6];
+    [self.attriIcon07 setAttriID:7];
+    [self.attriIcon08 setAttriID:8];
+    // 装备部件view的安装
+    [self setupAllPartViews];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+// custom function for init
+// 初始8个装备部件的view
+-(void)setupAllPartViews
+{
+    // 一共8个部位
+    self.partViewDict = [[NSMutableDictionary alloc] init];
+    [[self partViewDict] setObject:[self weaponView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_WEAPON]];
+    [[self partViewDict] setObject:[self headView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_HEAD]];
+    [[self partViewDict] setObject:[self bodyView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_BODY]];
+    [[self partViewDict] setObject:[self handView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_HAND]];
+    [[self partViewDict] setObject:[self backView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_BACK]];
+    [[self partViewDict] setObject:[self footView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_FOOT]];
+    [[self partViewDict] setObject:[self dectectorView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_DECTECTOR]];
+    [[self partViewDict] setObject:[self pickaxeView] forKey:[NSNumber numberWithInt:EQUIP_SLOT_PICKAXE]];
+    
+    // 每个view都有两个subview：默认格子 和  有装备格子
+    NSInteger count = [[self partViewDict] count];
+    for (int i=0; i<count; i++)
+    {
+        NSArray* nibs = [[NSBundle mainBundle] loadNibNamed:Part_Button_Xib owner:self options:nil];
+        QQEquipBtnDefault* defaultState = [nibs objectAtIndex:0];
+        QQEquipBtnSelected* selectedState = [nibs objectAtIndex:1];
+        
+        UIView* tempView = [[self partViewDict] objectForKey:[NSNumber numberWithInt:i+1]];
+        [selectedState setStateType:i+1];
+        [tempView addSubview:selectedState];
+        [defaultState setStateType:i+1];
+        [tempView addSubview:defaultState];
+        
+        // 设置宠物ID
+        defaultState.petId = DefaultValue;
+        selectedState.petId = DefaultValue;
+    }
+}
+// 重置8个装备部件的view
+-(void)resetAllPartViews
+{
+    NSInteger count = [[self partViewDict] count];
+    NSArray* partViewArr = [[self partViewDict] allValues];
+    for (int i=0; i<count; i++)
+    {
+        UIView* tempView = [partViewArr objectAtIndex:i];
+        NSArray* subviews = [tempView subviews];
+        QQEquipBtnDefault* defaultState;
+        QQEquipBtnSelected* selectedState;
+        
+        if ([[subviews objectAtIndex:0] isKindOfClass:[QQEquipBtnDefault class]])
+        {
+            defaultState = [subviews objectAtIndex:0];
+            selectedState = [subviews objectAtIndex:1];
+        }
+        else
+        {
+            defaultState = [subviews objectAtIndex:1];
+            selectedState = [subviews objectAtIndex:0];
+        }
+        
+        // 设置宠物ID
+        defaultState.petId = DefaultValue;
+        selectedState.petId = DefaultValue;
+        
+        [selectedState setHidden:YES];
+        [defaultState setHidden:NO];
+        [tempView bringSubviewToFront:defaultState];
+    }
+}
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+// 每次打开都调用
+-(void)setEquipViewData
+{
+    [self updateEquipViewData];
+}
+
+-(void)updateEquipViewData
+{
+    self.player = [[GameObject sharedInstance] player];
+    [self resetAllPartViews];
+    
+    [self setHeroAttributeData];    // 设置上半部分属性值
+    [self setHeroBVData];           // 计算玩家战斗力
+}
+
+-(void)setHeroAttributeData
+{
+    self.attackLabel.text   = [[self.player.heroAttributes attriAtkValue] stringValue];
+    self.liveLabel.text     = [[self.player.heroAttributes attriHpMaxValue] stringValue];
+    self.speedLabel.text    = [[self.player.heroAttributes attriSpdValue] stringValue];
+    self.armorLabel.text    = [[self.player.heroAttributes attriDefValue] stringValue];
+    self.pdefLabel.text     = [[self.player.heroAttributes attriPDefValue] stringValue];
+    self.mdefLabel.text     = [[self.player.heroAttributes attriMDefValue] stringValue];
+    self.probeLabel.text    = [[self.player.heroAttributes attriFoundValue] stringValue];
+    self.excavateLabel.text = [[self.player.heroAttributes attriDigValue] stringValue];
+    
+    self.playerLevelLabel.text  = [[self.player heroLevel] stringValue];
+    self.playerNameLabel.text   = [self.player heroName];
+}
+-(void)setHeroBVData
+{
+    // 初始战力
+    int32_t bv = [[self.player heroBv] intValue];
+    // 玩家身上装备数组
+    NSArray* equipsData = [[[GameObject sharedInstance] player] heroEquitsArray];
+    for (Equipment *tempEquip in equipsData)
+    {
+        // 设置装备部件view
+        [self setEquipPartBtnWithEquip:tempEquip];
+        bv += [tempEquip.equipBV intValue];
+    }
+    self.miningForceLabel.text = [NSString stringWithFormat:@"%d", bv];
+}
+
+-(void)setEquipPartBtnWithEquip:(Equipment*)equip
+{
+    UIView* tempView = [[self partViewDict] objectForKey:[equip equipSlot]];
+    if (tempView == nil)
+    {
+        [[GameUI sharedInstance] showError:@"未找到部件窗口view" title:@"error"];
+        return;
+    }
+    NSArray* subviews = [tempView subviews];
+    QQEquipBtnDefault* defaultState;
+    QQEquipBtnSelected* selectedState;
+    
+    if ([[subviews objectAtIndex:0] isKindOfClass:[QQEquipBtnDefault class]])
+    {
+        defaultState = [subviews objectAtIndex:0];
+        selectedState = [subviews objectAtIndex:1];
+    }
+    else
+    {
+        defaultState = [subviews objectAtIndex:1];
+        selectedState = [subviews objectAtIndex:0];
+    }
+    
+    [defaultState setHidden:YES];
+    [selectedState setHidden:NO];
+    [tempView bringSubviewToFront:selectedState];
+    [selectedState setEquipDataWithIdentifier:[equip equipEId]];
+}
+
+#pragma mark - Click events
+- (IBAction)onClosedClicked:(id)sender
+{
+    [[GameUI sharedInstance] showMineView];
+}
+
+- (IBAction)onShowMoreAttriClicked:(id)sender
+{
+}
+@end

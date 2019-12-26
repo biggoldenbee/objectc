@@ -1,0 +1,269 @@
+//
+//  StoreViewController.m
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/19.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import "StoreViewController.h"
+#import "GameUI.h"
+
+#import "StoreCollectionViewCell.h"
+#import "PackageManager.h"
+
+#define STORE_TYPE_0    0 // 普通
+#define STORE_TYPE_1    1 // 黑市
+#define STORE_TYPE_2    2 // 赌市
+
+
+@implementation Store
+
+-(NSArray *)setGoodsWithArray:(NSArray *)data
+{
+    if (data == nil || [data count] == 0)
+        return nil;
+    
+    NSMutableArray *tempArr = [[NSMutableArray alloc]init];
+    for (NSDictionary *tempDict in data)
+    {
+        Goods *goods = [[Goods alloc]init];
+        [goods setDataWithDictionary:tempDict];
+        [tempArr addObject:goods];
+    }
+    
+    return tempArr;
+}
+
+
+-(void)setDataWithDictionary:(NSDictionary *)data{
+    self.Luck = [[data objectForKey:@"Luck"] integerValue];
+    self.Type = [[data objectForKey:@"Type"] integerValue];
+    NSArray *goodsData = [data objectForKey:@"Goods"];
+    self.Goods = [self setGoodsWithArray:goodsData];
+}
+
+@end
+
+
+@interface StoreViewController ()
+@property (nonatomic,assign) NSInteger theStoreType;
+@property (nonatomic,strong) Store *theStore;
+@end
+
+@implementation StoreViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    self.theStoreType = STORE_TYPE_0;
+    [self resetAllBtns];
+    [self onStoreButtonClicked:[self theStoreButton]];
+
+
+    [self.storeCollectionView registerClass:[StoreCollectionViewCell class] forCellWithReuseIdentifier:@"StoreCollectionViewCell"];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)setDataInfoInViewControllers:(NSDictionary *)data {
+    if ([data objectForKey:@"Shop"])
+    {
+        NSArray *storeData = [data objectForKey:@"Shop"];
+        self.theStore = [[Store alloc] init];
+        [self.theStore setDataWithDictionary:[[storeData objectAtIndex:0] objectAtIndex:0]];
+        NSLog(@"%ld\n", self.theStore.Luck);
+        NSLog(@"%ld\n", self.theStore.Type);
+        for (Goods *goods in self.theStore.Goods) {
+            NSLog(@"%ld\n", [goods Type]);
+            NSLog(@"%@\n", [goods Token]);
+        }
+    }
+    if ([data objectForKey:@"Hero"])
+    {
+        NSLog(@"%@\n", [data objectForKey:@"Hero"]);
+    }
+    
+    [[self storeCollectionView] reloadData];
+    
+}
+
+-(void)storeQueryGoods:(NSInteger)type{
+    // type是-1将请求所有的商店物品
+    NSMutableDictionary* tempDict = [[NSMutableDictionary alloc]init];
+    [tempDict setObject:[NSNumber numberWithInt:(int)type] forKey:@"Type"];
+    [[PackageManager sharedInstance] storeQueryGoods:tempDict];
+}
+
+-(void)resetAllBtns{
+    [[self theStoreButton] setSelected:NO];
+    [[self theMarketButton] setSelected:NO];
+    [[self theGambleButton] setSelected:NO];
+}
+
+- (IBAction)onStoreButtonClicked:(id)sender {
+    [self resetAllBtns];
+    [[self theStoreButton] setSelected:YES];
+    [[self storeCollectionView] reloadData];
+    self.theStoreType = STORE_TYPE_0;
+    [self storeQueryGoods:self.theStoreType];
+}
+
+- (IBAction)onMarketButtonClicked:(id)sender {
+    [self resetAllBtns];
+    [[self theMarketButton] setSelected:YES];
+    [[self storeCollectionView] reloadData];
+    self.theStoreType = STORE_TYPE_1;
+    [self storeQueryGoods:self.theStoreType];
+}
+
+- (IBAction)onGambleClicked:(id)sender {
+    [self resetAllBtns];
+    [[self theGambleButton] setSelected:YES];
+    [[self storeCollectionView] reloadData];
+    self.theStoreType = STORE_TYPE_2;
+    [self storeQueryGoods:self.theStoreType];
+}
+
+- (IBAction)onCloseButtonClicked:(id)sender {
+    [[GameUI sharedInstance] showMineView];
+}
+
+
+- (IBAction)onRefreshClicked:(id)sender {
+    // 此处测试用
+    [self storeQueryGoods:-1];
+}
+
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+
+
+#pragma mark - Collection view datasource && delegate
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    switch ([self theStoreType])
+    {
+        case STORE_TYPE_0:
+            return 1;
+            break;
+        case STORE_TYPE_1:
+            return 1;
+            break;
+        case STORE_TYPE_2:
+            return 1;
+            break;
+        default:
+            return 1;
+            break;
+    }
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    switch ([self theStoreType])
+    {
+        case STORE_TYPE_0:
+            return [[self.theStore Goods] count];
+            break;
+        case STORE_TYPE_1:
+            return [[self.theStore Goods] count];
+            break;
+        case STORE_TYPE_2:
+            return [[self.theStore Goods] count];
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([indexPath section] == 0)
+    {
+        switch ([self theStoreType])
+        {
+            case STORE_TYPE_0:
+            {
+                StoreCollectionViewCell *cell = (StoreCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"StoreCollectionViewCell" forIndexPath:indexPath];
+        
+                NSInteger row = [indexPath row];
+                [cell setDataWithObject:[self.theStore.Goods objectAtIndex:row] storeType:self.theStoreType];
+            
+                // test
+/*
+                [cell setDataWithObject:[NSString stringWithFormat:@"base_propsbar2_%ld",(row%5)+1]
+                           itemIconName:[NSString stringWithFormat:@"equ_icon_%02ld", (row%5)+1]
+                          itemPropsName:[NSString stringWithFormat:@"equ%02ld", (row%5)+1]
+                         itemPriceValue:row
+                          itemStoreType:[self theStoreType]
+                              itemToken:row];
+*/
+                NSLog(@"row=%ld\n", row);
+        
+                return cell;
+                break;
+            }
+            case STORE_TYPE_1:
+            {
+                StoreCollectionViewCell *cell = (StoreCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"StoreCollectionViewCell" forIndexPath:indexPath];
+                
+                NSInteger row = [indexPath row];
+                
+                // test
+//                [cell setDataWithObject:[NSString stringWithFormat:@"base_propsbar2_1"]
+//                           itemIconName:[NSString stringWithFormat:@"equ_icon_%02ld", (row%5)+1]
+//                          itemPropsName:[NSString stringWithFormat:@"equ%02ld", row]
+//                         itemPriceValue:row];
+                
+                NSLog(@"row=%ld\n", row);
+                
+                return cell;
+                break;
+            }
+            case STORE_TYPE_2:
+            {
+                StoreCollectionViewCell *cell = (StoreCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"StoreCollectionViewCell" forIndexPath:indexPath];
+                
+                NSInteger row = [indexPath row];
+                
+                // test
+//                [cell setDataWithObject:[NSString stringWithFormat:@"base_propsbar2_2"]
+//                           itemIconName:[NSString stringWithFormat:@"equ_icon_%02ld", (row%5)+1]
+//                          itemPropsName:[NSString stringWithFormat:@"equ%02ld", row+4]
+//                         itemPriceValue:row];
+                
+                NSLog(@"row=%ld\n", row);
+                
+                return cell;
+                break;
+            }
+            default:
+                return nil;
+                break;
+        }
+    }
+    else
+    {
+        return nil;
+    }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSLog(@"didSelectItemAtIndexPath\n");
+}
+
+@end

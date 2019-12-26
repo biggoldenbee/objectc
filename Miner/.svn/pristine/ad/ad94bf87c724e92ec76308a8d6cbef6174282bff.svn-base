@@ -1,0 +1,27 @@
+//
+//  ExtraConfig.h
+//  Miner
+//
+//  Created by zhihua.qian on 14-11-20.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "BaseDBReader.h"
+
+@interface ExtraDef : NSObject
+
+@property (nonatomic, assign) NSInteger resultValue;   // 返回值
+@property (nonatomic, strong) NSString  *resultCode;    // 返回值code
+@property (nonatomic, strong) NSString  *en;            // 英语
+@property (nonatomic, strong) NSString  *cn;            // 汉语
+
+@end
+
+@interface ExtraConfig : BaseDBReader
+{
+    NSMutableDictionary *Definitions;
+}
+
++(ExtraConfig *)share;
+-(ExtraDef*)getExtraDefWithResultValue:(NSInteger)rv;
+@end

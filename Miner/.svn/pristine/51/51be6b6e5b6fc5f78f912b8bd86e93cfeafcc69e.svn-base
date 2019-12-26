@@ -1,0 +1,65 @@
+//
+//  BriefItemTableViewCell.m
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/10.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import "BriefItemTableViewCell.h"
+
+@interface BriefItemTableViewCell()
+@property (strong, nonatomic) UIImageView *baseImage;
+
+@end
+
+@implementation BriefItemTableViewCell
+
+-(id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        NSArray *arrayOfView = [[NSBundle mainBundle] loadNibNamed:@"BriefItemTableViewCell" owner:self options:nil];
+        
+        if (arrayOfView.count < 1)
+        {
+            return nil;
+        }
+
+        self = [arrayOfView objectAtIndex:0];
+        self.baseImage  =[[UIImageView alloc] init];
+        [self addSubview:self.baseImage] ;
+        [self sendSubviewToBack:self.baseImage];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+-(void)setDataWithIcon:(UIImage*)itemImage count:(NSNumber*)count; {
+    [self.itemIcon setImage:itemImage];
+    [self.itemCount setText:[NSString stringWithFormat:@"x%d",[count shortValue]]];
+}
+
+-(void)setDataWithBaseImage:(UIImage*)baseImage type:(NSNumber*)type; {
+    if (0==[type intValue]) {
+        [self.baseImage setFrame:CGRectMake(11,11,53,63)];
+        [self.baseImage setImage:baseImage] ;
+    } else if (1==[type intValue]) {
+        [self.baseImage setFrame:CGRectMake(11,11,53,63)];
+        [self.baseImage setImage:baseImage] ;
+    }
+}
+
+
+
+@end

@@ -1,0 +1,15 @@
+//
+//  BattleAnimationSkillBoard.h
+//  Miner
+//
+//  Created by jim kaden on 15/1/6.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface BattleAnimationSkillBoard : UIView
+@property (weak) IBOutlet UILabel* labelName;
+@property (weak) IBOutlet UIImageView* imageIcon;
++(BattleAnimationSkillBoard*)create:(UIView*)owner skill:(int)skill withLv:(int)lv;
+@end

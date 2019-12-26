@@ -1,0 +1,34 @@
+//
+//  RandatdConfig.h
+//  Miner
+//
+//  Created by zhihua.qian on 14-11-12.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "BaseDBReader.h"
+
+#define RANDATE_EVENT_NUM 5
+
+@interface RandateBase : NSObject
+
+@property (nonatomic, assign) NSInteger ranProp;
+@property (nonatomic, assign) NSInteger ranPropRatio;
+
+@end
+
+@interface RandateDef : NSObject
+
+@property (nonatomic, assign) NSInteger ranID;
+@property (nonatomic, assign) NSInteger ranType;
+@property (nonatomic, strong) NSDictionary  *eventDatas;
+
+@end
+
+@interface RandateConfig : BaseDBReader
+{
+    NSMutableDictionary *Definitions;
+}
+
++(RandateConfig *)share;
+@end

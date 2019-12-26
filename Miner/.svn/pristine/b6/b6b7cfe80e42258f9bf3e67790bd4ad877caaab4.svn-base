@@ -1,0 +1,40 @@
+//
+//  QQEquipBtnDefault.m
+//  Miner
+//
+//  Created by zhihua.qian on 14-12-23.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "QQEquipBtnDefault.h"
+#import "GameUtility.h"
+#import "GameUI.h"
+
+@implementation QQEquipBtnDefault
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+-(void)setStateType:(int)type
+{
+    self.btnType = [NSNumber numberWithInt:type];
+    
+    self.btnImageName = [GameUtility getImageNameForEquipViewWithType:type];
+    
+    UIImage* stateImage = [GameUtility imageNamed:self.btnImageName];
+    [self.defaultIcon setImage:stateImage forState:UIControlStateNormal];
+}
+
+- (IBAction)onSelectEquipClicked:(id)sender
+{
+    NSMutableDictionary* tempDict = [[NSMutableDictionary alloc]init];
+    [tempDict setObject:self.btnType forKey:@"EquipSlot"];
+    [tempDict setObject:self.petId forKey:@"PetId"];        // 宠物ID 默认为 0
+    [[GameUI sharedInstance] showEquipChangeView:tempDict];
+}
+@end

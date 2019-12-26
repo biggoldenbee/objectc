@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UpMainAttriViewController">
+            <connections>
+                <outlet property="attriIcon" destination="OQJ-0x-GM9" id="dhK-xv-dwH"/>
+                <outlet property="attriLevelForUpLabel" destination="Y85-dj-9mN" id="oHN-OG-250"/>
+                <outlet property="attriLevelLabel" destination="5gM-G6-yRq" id="xpY-uF-2Dt"/>
+                <outlet property="attriProgressView" destination="nec-qA-R9K" id="aqt-wn-8El"/>
+                <outlet property="attriValueForUpLabel" destination="lRN-dd-GIs" id="XgG-xm-751"/>
+                <outlet property="attriValueLabel" destination="gWz-jH-jgT" id="IRV-LM-5yi"/>
+                <outlet property="attributeIcon" destination="S21-uC-w4c" id="29u-sp-kkX"/>
+                <outlet property="costMoneyLabel" destination="yjP-cI-1fQ" id="i5u-VU-Dxh"/>
+                <outlet property="equipForUpgradeBtn" destination="3Zy-uN-3b7" id="5lX-Tt-vqE"/>
+                <outlet property="equipItem01" destination="yYW-eR-DVP" id="XJy-Jf-dT6"/>
+                <outlet property="equipItem02" destination="rir-FN-IrN" id="kbH-tx-nN4"/>
+                <outlet property="equipItem03" destination="tZs-df-8go" id="ERT-dr-1na"/>
+                <outlet property="equipItem04" destination="Cps-ZN-Nx2" id="uQv-Bc-Jpx"/>
+                <outlet property="equipItem05" destination="19E-GC-7i0" id="KqS-ZE-aNg"/>
+                <outlet property="equipItem06" destination="wtx-L0-2vs" id="3lk-Al-2D7"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="447"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="base_bar1.png" id="yR7-Bi-G0h">
+                    <rect key="frame" x="6" y="0.0" width="309" height="447"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="base_titlebar1.png" id="Igr-aw-1Xz">
+                    <rect key="frame" x="13" y="7" width="294" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Rf0-xV-ibO" userLabel="back">
+                    <rect key="frame" x="276" y="7" width="32" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="base_back_a.png"/>
+                    <state key="highlighted" backgroundImage="base_back_b.png"/>
+                    <connections>
+                        <action selector="onCloseClicked:" destination="-1" eventType="touchUpInside" id="gdK-R5-vFp"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nvh-kn-l28">
+                    <rect key="frame" x="46" y="406" width="90" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                    <state key="normal" title="Auto Select" backgroundImage="base_button2_a.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="base_button2_b.png"/>
+                    <connections>
+                        <action selector="onAutoSelectClicked:" destination="-1" eventType="touchUpInside" id="EQd-IE-bYv"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Vbo-OV-l8U">
+                    <rect key="frame" x="183" y="406" width="90" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                    <state key="normal" title="OK" backgroundImage="base_button1_a.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="base_button1_b.png"/>
+                    <connections>
+                        <action selector="onUpgradeClicked:" destination="-1" eventType="touchUpInside" id="s60-5c-Z4J"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" id="XPs-vT-CDW">
+                    <rect key="frame" x="0.0" y="41" width="320" height="240"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Money Consumption" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="btc-3N-J4Y">
+                            <rect key="frame" x="88" y="-5" width="144" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2300" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yjP-cI-1fQ">
+                            <rect key="frame" x="93" y="14" width="134" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Cps-ZN-Nx2">
+                            <rect key="frame" x="219" y="43" width="45" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="strengthen_add.png" backgroundImage="strengthen_equbar2.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" backgroundImage="base_ring1.png"/>
+                            <connections>
+                                <action selector="onSelectEquip04:" destination="-1" eventType="touchUpInside" id="HyI-Hx-woL"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="19E-GC-7i0">
+                            <rect key="frame" x="250" y="121" width="45" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="strengthen_add.png" backgroundImage="strengthen_equbar2.png">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" backgroundImage="base_ring1.png"/>
+                            <connections>
+                                <action selector="onSelectEquip05:" destination="-1" eventType="touchUpInside" id="7sw-By-3Nz"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wtx-L0-2vs">
+                            <rect key="frame" x="219" y="187" width="45" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="strengthen_add.png" backgroundImage="strengthen_equbar2.png">
+                                <color key="titleColor" red="0.97036535140000002" green="0.92661500730000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" backgroundImage="base_ring1.png"/>
+                            <connections>
+                                <action selector="onSelectEquip06:" destination="-1" eventType="touchUpInside" id="eqd-Cj-mm5"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rir-FN-IrN">
+                            <rect key="frame" x="29" y="110" width="45" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="strengthen_add.png" backgroundImage="strengthen_equbar2.png"/>
+                            <state key="selected" backgroundImage="base_ring1.png"/>
+                            <connections>
+                                <action selector="onSelectEquip02:" destination="-1" eventType="touchUpInside" id="0SM-1s-9KB"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yYW-eR-DVP">
+                            <rect key="frame" x="53" y="43" width="45" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="strengthen_add.png" backgroundImage="strengthen_equbar2.png">
+                                <color key="titleColor" red="0.97036535140000002" green="0.92661500730000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" backgroundImage="base_ring1.png"/>
+                            <connections>
+                                <action selector="onSelectEquip01:" destination="-1" eventType="touchUpInside" id="n1Z-8c-tEy"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tZs-df-8go">
+                            <rect key="frame" x="53" y="187" width="45" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="strengthen_add.png" backgroundImage="strengthen_equbar2.png">
+                                <color key="titleColor" red="0.97036535140000002" green="0.92661500730000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" backgroundImage="base_ring1.png"/>
+                            <connections>
+                                <action selector="onSelectEquip03:" destination="-1" eventType="touchUpInside" id="nmC-OU-ALE"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3Zy-uN-3b7">
+                            <rect key="frame" x="122" y="95" width="74" height="74"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="strengthen_add.png" backgroundImage="strengthen_equbar1.png">
+                                <color key="titleColor" red="0.97036535140000002" green="0.92661500730000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                </view>
+                <view contentMode="scaleToFill" id="chz-6g-2oM">
+                    <rect key="frame" x="0.0" y="267" width="320" height="131"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="base_shadow1.png" id="6za-v4-DEH">
+                            <rect key="frame" x="15" y="87" width="290" height="7"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="strengthen_bar1.png" id="rCJ-yr-QGl">
+                            <rect key="frame" x="60" y="21" width="200" height="69"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <view alpha="0.0" contentMode="scaleToFill" id="nec-qA-R9K" userLabel="ExpProgressView">
+                            <rect key="frame" x="69" y="27" width="185" height="10"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jea-l2-5yQ">
+                            <rect key="frame" x="67" y="45" width="47" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5gM-G6-yRq">
+                            <rect key="frame" x="122" y="45" width="24" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gWz-jH-jgT">
+                            <rect key="frame" x="91" y="65" width="55" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="strengthen_arrow2.png" id="IMM-A0-Qvr">
+                            <rect key="frame" x="155" y="52" width="12" height="9"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="strengthen_arrow2.png" id="0aW-Uv-vlg">
+                            <rect key="frame" x="155" y="72" width="12" height="9"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="strengthen_icon01.png" id="OQJ-0x-GM9">
+                            <rect key="frame" x="69" y="68" width="16" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y85-dj-9mN">
+                            <rect key="frame" x="174" y="45" width="80" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.0016096820806118586" green="0.77828045280612246" blue="0.0024974532991857536" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lRN-dd-GIs">
+                            <rect key="frame" x="174" y="65" width="80" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.0016096820806118586" green="0.77828045280612246" blue="0.0024974532991857536" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" id="S21-uC-w4c" customClass="UIAttributeIcon">
+                            <rect key="frame" x="69" y="68" width="16" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property Strengthen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1I1-mw-gy5">
+                    <rect key="frame" x="87" y="5" width="147" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="330" y="356.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="base_back_a.png" width="32" height="27"/>
+        <image name="base_back_b.png" width="32" height="27"/>
+        <image name="base_bar1.png" width="309" height="448"/>
+        <image name="base_button1_a.png" width="96" height="27"/>
+        <image name="base_button1_b.png" width="96" height="27"/>
+        <image name="base_button2_a.png" width="96" height="27"/>
+        <image name="base_button2_b.png" width="96" height="27"/>
+        <image name="base_ring1.png" width="75" height="75"/>
+        <image name="base_shadow1.png" width="128" height="8"/>
+        <image name="base_titlebar1.png" width="295" height="27"/>
+        <image name="strengthen_add.png" width="28" height="28"/>
+        <image name="strengthen_arrow2.png" width="12" height="9"/>
+        <image name="strengthen_bar1.png" width="200" height="70"/>
+        <image name="strengthen_equbar1.png" width="74" height="74"/>
+        <image name="strengthen_equbar2.png" width="45" height="45"/>
+        <image name="strengthen_icon01.png" width="16" height="16"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

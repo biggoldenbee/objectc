@@ -1,0 +1,434 @@
+//
+//  EquipmentConfig.m
+//  Miner
+//
+//  Created by zhihua.qian on 14-11-12.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "EquipmentConfig.h"
+
+@implementation EquipmentDef
+
+@end
+
+@implementation EquipmentConfig
+static EquipmentConfig * _equipmentConfig = nil;
+
++(EquipmentConfig *)share
+{
+    if (_equipmentConfig == nil)
+    {
+        _equipmentConfig = [[EquipmentConfig alloc]init];
+    }
+    return _equipmentConfig;
+}
+
+-(void)dealloc
+{
+    Definitions = nil;
+}
+
+-(void)reset
+{
+    [super reset];
+    Definitions = nil;
+}
+//
+// 重载了父类的方法
+//
+-(void)initWithString:(NSString *)buffer
+{
+    NSMutableArray *rows = (NSMutableArray *)[buffer componentsSeparatedByString:@"\r\n"];
+    for (int k=1; k<[rows count]-1; k++)
+    {
+        NSMutableArray *cols = (NSMutableArray *)[[rows objectAtIndex:k] componentsSeparatedByString:@"\t"];
+        EquipmentDef *def = [[EquipmentDef alloc]init];
+        
+        int i=0;
+        def.equipId         = [[cols objectAtIndex:i++] integerValue];
+        def.equipName       = [cols objectAtIndex:i++];
+        def.equipDesc       = [cols objectAtIndex:i++];
+        def.equipIcon       = [cols objectAtIndex:i++];
+        def.equipStar       = [[cols objectAtIndex:i++] integerValue];
+        def.equipSlot       = [[cols objectAtIndex:i++] integerValue];
+        def.itemType        = [[cols objectAtIndex:i++] integerValue];
+        def.primaryAttri    = [[cols objectAtIndex:i++] integerValue];
+        def.subAttriGId     = [[cols objectAtIndex:i++] integerValue];
+        def.subAttriUpID    = [[cols objectAtIndex:i++] integerValue];
+        def.sellType        = [[cols objectAtIndex:i++] integerValue];
+//        def.sellNum         = [cols objectAtIndex:i++];
+        def.basicExp        = [[cols objectAtIndex:i++] integerValue];
+        def.specialAttri    = [[cols objectAtIndex:i++] integerValue];
+        def.specialExp    = [[cols objectAtIndex:i++] integerValue];
+        
+        def.logFontSize = [[cols objectAtIndex:i++] integerValue];
+        
+        int r,g,b;
+        r = [[cols objectAtIndex:i++] intValue];
+        g = [[cols objectAtIndex:i++] intValue];
+        b = [[cols objectAtIndex:i++] intValue];
+        def.logFontColor = [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f];
+
+        [self addRow:def];
+    }
+}
+
+//
+// 重载了父类的方法
+//
+-(void)loadDBFromLocal
+{
+    Definitions = [[NSMutableDictionary alloc]init];
+    for (int i=0; i<[self numOfRow]; i++)
+    {
+        EquipmentDef *def = [self rowAtIndex:i];
+        [Definitions setObject:def forKey:[NSString stringWithFormat:@"%lu",def.equipId]];
+        def =nil;
+    }
+}
+
+-(EquipmentDef *)getEquipmentDefWithKey:(NSNumber *)key
+{
+    EquipmentDef *temp = [Definitions objectForKey:[key stringValue]];
+    return temp;
+}
+@end
+
+// -----------------------------------------------------------------------------------
+
+@implementation MainBaseAttri
+
+@end
+
+@implementation MainAttriLvDef
+
+-(id)init
+{
+    self = [super init];
+    
+    self.baseAttriLvs = [[NSDictionary alloc]init];
+    
+    return self;
+}
+
+-(BOOL)addMainBaseAttriIntoDictionary:(MainBaseAttri *)mba
+{
+    NSString *key = [NSString stringWithFormat:@"%lu", mba.equipLv];
+    MainBaseAttri *tempMba = [self.baseAttriLvs objectForKey:key];
+    if (tempMba != nil)
+    {
+        return NO;
+    }
+    
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:self.baseAttriLvs];
+    [tempDict setValue:mba forKey:key];
+    self.baseAttriLvs = [[NSDictionary alloc]initWithDictionary:tempDict];
+    
+    return YES;
+}
+
+@end
+
+@implementation MainAttriLvConfig
+static MainAttriLvConfig * _mainAttriLvConfig = nil;
++(MainAttriLvConfig *)share
+{
+    if (_mainAttriLvConfig == nil)
+    {
+        _mainAttriLvConfig = [[MainAttriLvConfig alloc]init];
+    }
+    return _mainAttriLvConfig;
+}
+
+-(void)dealloc
+{
+    Definitions = nil;
+}
+
+-(void)reset
+{
+    [super reset];
+    Definitions = nil;
+}
+//
+// 重载了父类的方法
+//
+-(void)initWithString:(NSString *)buffer
+{
+    NSMutableArray *rows = (NSMutableArray *)[buffer componentsSeparatedByString:@"\r\n"];
+
+    for (int k=1; k<[rows count]-1; k++)
+    {
+        NSMutableArray *cols = (NSMutableArray *)[[rows objectAtIndex:k] componentsSeparatedByString:@"\t"];
+        
+        int i=0;
+        NSInteger star      = [[cols objectAtIndex:i++] integerValue];
+        MainAttriLvDef *def = [self rowAtIndex:(int)star-1];
+        if (def == nil)
+        {
+            def = [[MainAttriLvDef alloc]init];
+            def.equipStar = star;
+            [self addRow:def];
+        }
+        
+        MainBaseAttri *mba  = [[MainBaseAttri alloc]init];
+        mba.equipLv         = [[cols objectAtIndex:i++] integerValue];
+        mba.upgradeExp      = [[cols objectAtIndex:i++] integerValue];
+        mba.upgradeMoney    = [[cols objectAtIndex:i++] integerValue];
+        mba.moneyMulti      = [[cols objectAtIndex:i++] integerValue];
+        [def addMainBaseAttriIntoDictionary:mba];
+    }
+}
+
+//
+// 重载了父类的方法
+//
+-(void)loadDBFromLocal
+{
+    Definitions = [[NSMutableDictionary alloc]init];
+    for (int i=0; i<[self numOfRow]; i++)
+    {
+        MainAttriLvDef *def = [self rowAtIndex:i];
+        [Definitions setObject:def forKey:[NSString stringWithFormat:@"%lu", def.equipStar]];
+        def =nil;
+    }
+}
+
+-(NSNumber *)getLevelMaxExpWithLv:(NSNumber *)level starNum:(NSNumber *)star
+{
+    MainAttriLvDef *def = [Definitions objectForKey:[star stringValue]];
+    MainBaseAttri *base = [def.baseAttriLvs objectForKey:[level stringValue]];
+    
+    return [[NSNumber alloc]initWithInteger:base.upgradeExp];
+}
+
+-(NSNumber *)getTotalExpWithLV:(NSNumber*)level starNum:(NSNumber*)star
+{
+    MainAttriLvDef* def = [Definitions objectForKey:[star stringValue]];
+    NSUInteger expTotal = 0;
+    for (int i=0; i<[level intValue]; i++)
+    {
+        MainBaseAttri* base = [def.baseAttriLvs objectForKey:[NSString stringWithFormat:@"%d",i]];
+        expTotal += base.upgradeExp;
+    }
+    return [NSNumber numberWithUnsignedInteger:expTotal];
+}
+
+-(NSNumber *)getMoneyTypeWithLv:(NSNumber*)level starNum:(NSNumber*)star
+{
+    MainAttriLvDef *def = [Definitions objectForKey:[star stringValue]];
+    MainBaseAttri *base = [def.baseAttriLvs objectForKey:[level stringValue]];
+    
+    return [[NSNumber alloc]initWithInteger:base.upgradeMoney];
+}
+
+-(NSNumber *)getMoneyRatioWithLv:(NSNumber*)level starNum:(NSNumber*)star
+{
+    MainAttriLvDef *def = [Definitions objectForKey:[star stringValue]];
+    MainBaseAttri *base = [def.baseAttriLvs objectForKey:[level stringValue]];
+    
+    return [[NSNumber alloc]initWithInteger:base.moneyMulti];
+}
+@end
+
+// -----------------------------------------------------------------------------------
+
+@implementation SubAttriLvBase
+
+@end
+
+@implementation SubAttriLvDef
+
+-(id)init
+{
+    self = [super init];
+    if (self != nil)
+    {
+        self.baseAttriLvs = [[NSDictionary alloc]init];
+    }
+    return self;
+}
+
+-(BOOL)addSubAttriLvBaseIntoDictionary:(SubAttriLvBase *)sab
+{
+    NSString *key = [NSString stringWithFormat:@"%lu", sab.subAttriLv];
+    SubAttriLvBase *tempSab = [self.baseAttriLvs objectForKey:key];
+    if (tempSab != nil)
+    {
+        return NO;
+    }
+    
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:self.baseAttriLvs];
+    [tempDict setValue:sab forKey:key];
+    self.baseAttriLvs = [[NSDictionary alloc]initWithDictionary:tempDict];
+    
+    return YES;
+}
+
+@end
+
+@implementation SubAttriLvConfig
+
+static SubAttriLvConfig * _subAttriLvConfig = nil;
+
++(SubAttriLvConfig *)share
+{
+    if (_subAttriLvConfig == nil)
+    {
+        _subAttriLvConfig = [[SubAttriLvConfig alloc]init];
+    }
+    return _subAttriLvConfig;
+}
+
+-(void)dealloc
+{
+    Definitions = nil;
+}
+
+-(void)reset
+{
+    [super reset];
+    Definitions = nil;
+}
+
+-(SubAttriLvDef*)rowAtIndex:(int)said
+{
+    for (SubAttriLvDef* def in _DB)
+    {
+        if ([def subAttriUpID] == said)
+        {
+            return def;
+        }
+    }
+    return nil;
+}
+
+//
+// 重载了父类的方法
+//
+-(void)initWithString:(NSString *)buffer
+{
+    NSMutableArray *rows = (NSMutableArray *)[buffer componentsSeparatedByString:@"\r\n"];
+
+    for (int k=1; k<[rows count]-1; k++)
+    {
+        NSMutableArray *cols = (NSMutableArray *)[[rows objectAtIndex:k] componentsSeparatedByString:@"\t"];
+        
+        int i=0;
+        NSInteger saupid    = [[cols objectAtIndex:i++] integerValue];
+        SubAttriLvDef *def  = [self rowAtIndex:(int)saupid];
+        if (def == nil)
+        {
+            def = [[SubAttriLvDef alloc]init];
+            def.subAttriUpID = saupid;
+            [self addRow:def];
+        }
+        
+        SubAttriLvBase *sab = [[SubAttriLvBase alloc]init];
+        sab.subAttriLv      = [[cols objectAtIndex:i++] integerValue];
+        sab.costMoney       = [[cols objectAtIndex:i++] integerValue];
+        sab.item1id         = [[cols objectAtIndex:i++] integerValue];
+        sab.item1Num        = [[cols objectAtIndex:i++] integerValue];
+        sab.item2id         = [[cols objectAtIndex:i++] integerValue];
+        sab.item2Num        = [[cols objectAtIndex:i++] integerValue];
+        sab.item3id         = [[cols objectAtIndex:i++] integerValue];
+        sab.item3Num        = [[cols objectAtIndex:i++] integerValue];
+        sab.item4id         = [[cols objectAtIndex:i++] integerValue];
+        sab.item4Num        = [[cols objectAtIndex:i++] integerValue];
+        
+        [def addSubAttriLvBaseIntoDictionary:sab];
+    }
+}
+
+//
+// 重载了父类的方法
+//
+-(void)loadDBFromLocal
+{
+//    Definitions = [[NSMutableDictionary alloc]init];
+//    for (int i=0; i<[self numOfRow]; i++)
+//    {
+//        SubAttriLvDef *def = [self rowAtIndex:i];
+//        [Definitions setObject:def forKey:[NSString stringWithFormat:@"%lu", def.subAttriUpID]];
+//        def =nil;
+//    }
+    Definitions = [[NSMutableDictionary alloc] init];
+    for (SubAttriLvDef* def in _DB)
+    {
+        [Definitions setObject:def forKey:[NSString stringWithFormat:@"%lu", def.subAttriUpID]];
+    }
+}
+
+-(SubAttriLvBase *)getUpgradeItemsWithLevel:(NSNumber *)level subAttriUpID:(NSInteger)upId
+{
+    SubAttriLvDef *def = [Definitions objectForKey:[NSString stringWithFormat:@"%lu", upId]];
+    return [def.baseAttriLvs objectForKey:[level stringValue]];
+}
+@end
+
+// -----------------------------------------------------------------------------------
+
+@implementation SubAttriGDef
+
+@end
+
+@implementation SubAttriGConfig
+
+static SubAttriGConfig * _subAttriGConfig = nil;
+
++(SubAttriGConfig *)share
+{
+    if (_subAttriGConfig == nil)
+    {
+        _subAttriGConfig = [[SubAttriGConfig alloc]init];
+    }
+    return _subAttriGConfig;
+}
+
+-(void)dealloc
+{
+    Definitions = nil;
+}
+
+-(void)reset
+{
+    [super reset];
+    Definitions = nil;
+}
+//
+// 重载了父类的方法
+//
+-(void)initWithString:(NSString *)buffer
+{
+    NSMutableArray *rows = (NSMutableArray *)[buffer componentsSeparatedByString:@"\r\n"];
+    for (int k=1; k<[rows count]-1; k++)
+    {
+        NSMutableArray *cols = (NSMutableArray *)[[rows objectAtIndex:k] componentsSeparatedByString:@"\t"];
+        SubAttriGDef *def = [[SubAttriGDef alloc]init];
+        
+        int i=0;
+        def.subAttriGID = [[cols objectAtIndex:i++] integerValue];
+        def.attriID1    = [[cols objectAtIndex:i++] integerValue];
+        def.attriID2    = [[cols objectAtIndex:i++] integerValue];
+        def.attriID3    = [[cols objectAtIndex:i++] integerValue];
+        def.attriID4    = [[cols objectAtIndex:i++] integerValue];
+        
+        [self addRow:def];
+    }
+}
+
+//
+// 重载了父类的方法
+//
+-(void)loadDBFromLocal
+{
+    Definitions = [[NSMutableDictionary alloc]init];
+    for (int i=0; i<[self numOfRow]; i++)
+    {
+        SubAttriGDef *def = [self rowAtIndex:i];
+        [Definitions setObject:def forKey:[NSString stringWithFormat:@"%lu", def.subAttriGID]];
+        def =nil;
+    }
+}
+@end

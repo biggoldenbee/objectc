@@ -1,0 +1,60 @@
+//
+//  UpSubAttriViewController.h
+//  Miner
+//
+//  Created by zhihua.qian on 14-12-1.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@class Equipment;
+
+@interface CostItem : NSObject
+@property (nonatomic, strong) NSNumber* itemIId;
+@property (nonatomic, assign) NSInteger itemNum;
+@end
+
+
+@interface UpSubAttriViewController : UIViewController
+
+@property (weak, nonatomic) Equipment* equipForUpgrade;
+
+@property (strong, nonatomic) IBOutlet UILabel* moneyLabel;
+@property (strong, nonatomic) IBOutlet UIImageView* equipStarImage;
+@property (strong, nonatomic) IBOutlet UIImageView *equipIconImage;
+
+@property (strong, nonatomic) IBOutlet UILabel* subAttriLevelLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *subAttriLevelArrowImage;
+@property (strong, nonatomic) IBOutlet UILabel* subNextAttriLevelLabel;
+
+@property (strong, nonatomic) IBOutlet UIView *item1View;
+@property (strong, nonatomic) IBOutlet UIView *item2View;
+@property (strong, nonatomic) IBOutlet UIView *item3View;
+@property (strong, nonatomic) IBOutlet UIView *item4View;
+
+@property (strong, nonatomic) NSNumber* subAttri1Identifier;
+@property (strong, nonatomic) IBOutlet UIImageView *subAttri1IconImage;
+@property (strong, nonatomic) IBOutlet UILabel* subAttri1ValueLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *subAttri1ArrowImage;
+@property (strong, nonatomic) IBOutlet UILabel* subNextAttri1ValueLabel;
+
+@property (strong, nonatomic) NSNumber  *subAttri2Identifier;
+@property (strong, nonatomic) IBOutlet UIImageView *subAttri2IconImage;
+@property (strong, nonatomic) IBOutlet UILabel *subAttri2ValueLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *subAttri2ArrowImage;
+@property (strong, nonatomic) IBOutlet UILabel* subNextAttri2ValueLabel;
+
+@property (strong, nonatomic) NSNumber  *subAttri3Identifier;
+@property (strong, nonatomic) IBOutlet UIImageView *subAttri3IconImage;
+@property (strong, nonatomic) IBOutlet UILabel *subAttri3ValueLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *subAttri3ArrowImage;
+@property (strong, nonatomic) IBOutlet UILabel* subNextAttri3ValueLabel;
+
+@property (strong, nonatomic) IBOutlet UIButton *subAttriBtn;
+
+@property (strong, nonatomic) NSArray* itemViewArray;
+-(void)setDataInfoInViewControllers:(NSDictionary *)data;
+
+-(void)updateEquipInfo:(NSNumber*)equipId;
+@end

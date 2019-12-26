@@ -1,0 +1,55 @@
+//
+//  Equip.h
+//  testMiner
+//
+//  Created by zhihua.qian on 14-12-3.
+//  Copyright (c) 2014年 tonyguan. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "EquipmentConfig.h"
+
+@interface Attribute : NSObject
+
+@property (nonatomic, strong) NSNumber  *attriId;       // 属性id
+@property (nonatomic, strong) NSNumber  *attriLv;       // 属性等级
+@property (nonatomic, strong) NSNumber  *attriValue;    // 属性数值
+@property (nonatomic, strong) NSNumber  *attriBaseExp;  // 装备提供的基础经验
+@property (nonatomic, strong) NSNumber  *attriCurExp;   // 当前等级的现有经验
+@property (nonatomic, strong) NSNumber  *attriMaxExp;   // 到下一级需要的经验
+@property (nonatomic, strong) NSNumber  *attriTotalExp; // 到现在为止的总经验量
+@property (nonatomic, strong) NSString  *attriName;
+@property (nonatomic, strong) NSString  *attriDesc;
+@property (nonatomic, strong) NSString  *attriIcon;
+@property (nonatomic, strong) SubAttriLvBase  *attriUpItems;    // 作为副属性的时候升级材料
+@property (nonatomic, strong) NSNumber  *moneyType;     // 升级需要的货币类型
+@property (nonatomic, strong) NSNumber  *moneyRatio;    // 升级提供的货币系数
+@property (nonatomic, assign) unsigned int cost;
+@property (nonatomic, assign) float ratio;
+
+@end
+
+//**********************************************************************
+@interface Equipment : NSObject
+
+@property (nonatomic, strong) NSNumber  *equipId;           // 装备ID  实例
+@property (nonatomic, strong) NSNumber  *equipTId;          // 配置表内的ID
+@property (nonatomic, strong) NSString  *equipName;         //
+@property (nonatomic, strong) NSString  *equipIcon;         //
+@property (nonatomic, strong) NSString  *equipDesc;         //
+@property (nonatomic, strong) NSNumber  *equipSlot;         // 装备位置：0.-1都为未装备
+@property (nonatomic, strong) NSNumber  *equipStar;         // 装备星级
+@property (nonatomic, strong) NSNumber  *equipType;         // 物品类型
+@property (nonatomic, strong) NSNumber  *equipBV;           // 装备战斗力
+@property (nonatomic, strong) Attribute *mainAttri;         // 装备主属性
+@property (nonatomic, strong) NSArray   *subAttri;          // 装备副属性
+@property (nonatomic, strong) Attribute *godAttri;          // 装备神器属性
+@property (nonatomic, weak) EquipmentDef  *equipmentDef;    // 装备的基础属性
+@property (nonatomic, strong) NSNumber  *equipSellPrice;    // 装备的售价
+
+-(void)setEquipDataWithDictionary:(NSDictionary *)data;
+
+-(NSString *)mainAttriInfoString;
+-(NSString *)subAttriInfoString;
+-(int)getMainAttriType;
+@end

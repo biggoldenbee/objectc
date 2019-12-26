@@ -1,0 +1,39 @@
+//
+//  Skill.m
+//  testMiner
+//
+//  Created by zhihua.qian on 14-12-4.
+//  Copyright (c) 2014年 tonyguan. All rights reserved.
+//
+
+#import "Skill.h"
+#import "UtilityDef.h"
+
+@implementation Skill
+
+-(void)setSkillDataWithNumberId:(NSNumber *)identifier
+{
+    self.skillTId   = identifier;
+    
+    SkillDef* def   = [[SkillConfig share] getSkillDefWithIdentifier:identifier];
+    self.skillName  = [def skillName];
+    self.skillDesc  = [def skillDesc];
+    self.skillIcon  = [def skillIcon];
+    self.needHeroLV = INTEGER_TO_NUMBER([def needHeroLV]);
+    self.skillCastVal   = INTEGER_TO_NUMBER([def skillCastVal]);
+    self.skillTarget    = INTEGER_TO_NUMBER([def skillTarget]);
+    self.skillAtkType   = INTEGER_TO_NUMBER([def atkType]);
+    self.attriID    = INTEGER_TO_NUMBER([def attriID]);
+    self.skillNum   = INTEGER_TO_NUMBER([def skillNum]);
+    self.skillCD    = INTEGER_TO_NUMBER([def skillCD]);
+    self.buffDatas  = [NSDictionary dictionaryWithDictionary:[def buffDatas]];
+    self.attackingAnimation         = [def attackingAnimation];
+    self.attackingEffectAnimation   = [def attackingEffectAnimation];
+    self.defendingAnimation         = [def defendingAnimation];
+    self.defendingEffectAnimation   = [def defendingEffectAnimation];
+    self.logFontSize    = INTEGER_TO_NUMBER([def logFontSize]);
+    self.logFontColor   = [def logFontColor];
+    self.animaFontSize  = INTEGER_TO_NUMBER([def animaFontSize]);
+    self.animaFontColor = [def animaFontColor];
+}
+@end

@@ -1,0 +1,57 @@
+//
+//  EquipInfoViewController.h
+//  Miner
+//
+//  Created by zhihua.qian on 14-12-1.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "BaseViewController.h"
+#import "UIToolTipImageView.h"
+
+@interface EquipInfoViewController : BaseViewController
+
+@property (strong, nonatomic) IBOutlet UILabel *equipNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) IBOutlet UILabel *textLvLabel;
+
+@property (strong, nonatomic) IBOutlet UIImageView *mainAttriIcon;
+@property (strong, nonatomic) IBOutlet UILabel *mainAttriLabel;
+@property (weak, nonatomic) IBOutlet UIAttributeIcon *attributeIcon0;
+
+@property (strong, nonatomic) IBOutlet UIImageView *sub1AttriIcon;
+@property (strong, nonatomic) IBOutlet UILabel *sub1AttriLabel;
+@property (weak, nonatomic) IBOutlet UIAttributeIcon *attributeIcon1;
+
+@property (strong, nonatomic) IBOutlet UIImageView *sub2AttriIcon;
+@property (strong, nonatomic) IBOutlet UILabel *sub2AttriLabel;
+@property (weak, nonatomic) IBOutlet UIAttributeIcon *attributeIcon2;
+
+@property (strong, nonatomic) IBOutlet UIImageView *sub3AttriIcon;
+@property (strong, nonatomic) IBOutlet UILabel *sub3AttriLabel;
+@property (weak, nonatomic) IBOutlet UIAttributeIcon *attributeIcon3;
+
+@property (strong, nonatomic) IBOutlet UIImageView *godAttriIcon;
+@property (strong, nonatomic) IBOutlet UILabel *godAttriLabel;
+@property (weak, nonatomic) IBOutlet UIAttributeIcon *attributeIcon4;
+
+@property (strong, nonatomic) IBOutlet UIImageView *equipIcon;
+@property (strong, nonatomic) IBOutlet UIImageView *equipStarIcon;
+
+@property (strong, nonatomic) IBOutlet UILabel *equipLevel;
+
+@property (strong, nonatomic) IBOutlet UIButton *builBtn;
+@property (strong, nonatomic) IBOutlet UIButton *evolutionBtn;
+
+@property (strong, nonatomic) IBOutlet UIImageView *sellIcon;
+@property (strong, nonatomic) IBOutlet UILabel *sellPriceLabel;
+@property (strong, nonatomic) IBOutlet UIButton *sellEquipBtn;
+
+@property (strong, nonatomic) IBOutlet UITextView *equipDescLabel;
+
+@property (strong, nonatomic) IBOutlet UIButton *removeBtn;
+@property (strong, nonatomic) IBOutlet UIButton *repalceBtn;
+
+-(void)setEquipInfoViewData:(NSDictionary *)data;
+-(void)updateEquipInfoView;
+@end

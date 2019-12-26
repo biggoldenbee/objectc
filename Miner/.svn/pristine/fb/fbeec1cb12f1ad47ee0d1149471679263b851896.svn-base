@@ -1,0 +1,18 @@
+//
+//  BriefItemTableViewCell.h
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/10.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface BriefItemTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *itemIcon;
+@property (weak, nonatomic) IBOutlet UILabel *itemCount;
+
+-(void)setDataWithIcon:(UIImage*)itemImage count:(NSNumber*)count;
+-(void)setDataWithBaseImage:(UIImage*)baseImage type:(NSNumber*)type;
+
+@end

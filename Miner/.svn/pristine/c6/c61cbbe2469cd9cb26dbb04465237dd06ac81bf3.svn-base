@@ -1,0 +1,59 @@
+//
+//  StoreCollectionViewCell.m
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/19.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import "StoreCollectionViewCell.h"
+
+#import "GameUtility.h"
+
+@implementation StoreCollectionViewCell
+
+-(id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        NSArray *arrayOfView = [[NSBundle mainBundle] loadNibNamed:@"StoreCollectionViewCell" owner:self options:nil];
+        
+        if (arrayOfView.count < 1)
+        {
+            return nil;
+        }
+        
+        if (![[arrayOfView objectAtIndex:0] isKindOfClass:[StoreCollectionViewCell class]])
+        {
+            return nil;
+        }
+        
+        self = [arrayOfView objectAtIndex:0];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+-(void)setDataWithObject:(NSString *)itemPropsBarName
+            itemIconName:(NSString *)itemIconName
+           itemPropsName:(NSString *)itemPropsName
+          itemPriceValue:(NSInteger)itemPriceValue {
+    
+    NSLog(@"itemPropsBarName=%@\n", itemPropsBarName) ;
+    
+    [self.itemPropsBar setImage:[GameUtility imageNamed:itemPropsBarName]];
+    [self.itemIcon setImage:[GameUtility imageNamed:itemIconName]];
+    [self.itemPrice setText:itemPropsName];
+    [self.itemPrice setText:[NSString stringWithFormat:@"%ld", (long)itemPriceValue]];
+}
+
+
+- (IBAction)onItemBuyClick:(id)sender {
+    NSLog(@"StoreCollectionViewCell:onItemBuyClick\n");
+}
+
+@end

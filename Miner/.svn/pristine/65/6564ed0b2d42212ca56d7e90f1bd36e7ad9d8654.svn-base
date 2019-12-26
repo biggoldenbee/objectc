@@ -1,0 +1,75 @@
+//
+//  StoreCollectionViewCell.m
+//  Miner
+//
+//  Created by biggoldenbee on 15/1/19.
+//  Copyright (c) 2015年 jim kaden. All rights reserved.
+//
+
+#import "StoreCollectionViewCell.h"
+
+#import "GameUtility.h"
+#import "PackageManager.h"
+
+
+@interface StoreCollectionViewCell()
+@property (nonatomic, assign) NSInteger theStoreType;
+@property (nonatomic, assign) NSInteger theToken;
+@end
+
+@implementation StoreCollectionViewCell
+
+-(id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        NSArray *arrayOfView = [[NSBundle mainBundle] loadNibNamed:@"StoreCollectionViewCell" owner:self options:nil];
+        
+        if (arrayOfView.count < 1)
+        {
+            return nil;
+        }
+        
+        if (![[arrayOfView objectAtIndex:0] isKindOfClass:[StoreCollectionViewCell class]])
+        {
+            return nil;
+        }
+        
+        self = [arrayOfView objectAtIndex:0];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+-(void)setDataWithObject:(NSString *)itemPropsBarName
+            itemIconName:(NSString *)itemIconName
+           itemPropsName:(NSString *)itemPropsName
+          itemPriceValue:(NSInteger)itemPriceValue
+           itemStoreType:(NSInteger)itemStoreType
+               itemToken:(NSInteger)itemToken{
+    
+    NSLog(@"itemPropsBarName=%@\n", itemPropsBarName) ;
+    
+    [self.itemPropsBar setImage:[GameUtility imageNamed:itemPropsBarName]];
+    [self.itemIcon setImage:[GameUtility imageNamed:itemIconName]];
+    [self.itemPrice setText:itemPropsName];
+    [self.itemPrice setText:[NSString stringWithFormat:@"%ld", (long)itemPriceValue]];
+    self.theStoreType = itemStoreType;
+    self.theToken = itemToken;
+}
+
+
+- (IBAction)onItemBuyClick:(id)sender {
+    NSMutableDictionary* tempDict = [[NSMutableDictionary alloc]init];
+    [tempDict setObject:[NSNumber numberWithLong:[self theStoreType]] forKey:@"Type"];
+    [tempDict setObject:[NSNumber numberWithLong:[self theToken]] forKey:@"Token"];
+    [[PackageManager sharedInstance] storeBuyGoods:tempDict];
+
+    NSLog(@"StoreCollectionViewCell:onItemBuyClick\n");
+}
+
+@end

@@ -1,0 +1,367 @@
+//
+//  UpGradeEquipViewController.m
+//  Miner
+//
+//  Created by zhihua.qian on 14-12-1.
+//  Copyright (c) 2014年 jim kaden. All rights reserved.
+//
+
+#import "UpMainAttriViewController.h"
+#import "Equipment.h"
+#import "GameObject.h"
+#import "GameUI.h"
+#import "PackageManager.h"
+#import "GameUtility.h"
+#import "QQProgressView.h"
+#import "ConstantsConfig.h"
+#import "AttriConfig.h"
+#import "EquipmentConfig.h"
+#import "UtilityDef.h"
+
+#define DEFAULT_IAMGE_NAME              @"strengthen_add"
+#define DEFAULT_BACKGROUNDIAMGE_NAME    @"strengthen_equbar2"
+
+#define PROGRESS_REAL                   @"strengthen_progress1"
+#define PROGRESS_VIRTUAL                @"strengthen_progress2"
+#define PROGRESS_BG                     @"equ_progressbg"
+
+@interface UpMainAttriViewController ()
+
+@property (nonatomic, strong) QQProgressView* expProgress;
+
+@property (nonatomic, strong) NSArray *equipsForUpgrade;
+@property (nonatomic, strong) NSNumber* equipIdWillUp;
+@property (nonatomic, strong) NSNumber* petId;
+@end
+
+@implementation UpMainAttriViewController
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    costMoney = 0;
+    addExp = 0;
+    self.petId = DefaultValue;
+    [self.attributeIcon setAttriID:1];
+    [self setupExpProgressView];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)setupExpProgressView
+{
+    // 添加所谓的贡献经验条（就是个进度条啦）
+    NSArray* nibs = [[NSBundle mainBundle] loadNibNamed:@"QQProgressView" owner:self options:nil];
+    self.expProgress = [nibs objectAtIndex:0];
+    self.expProgress.frame = self.attriProgressView.bounds;
+    [self.attriProgressView addSubview:self.expProgress];
+    self.expProgress.frame = self.attriProgressView.bounds;
+    [self.expProgress.backgroundImage setImage:[GameUtility imageNamed:PROGRESS_BG]];
+    [self.expProgress.trackImage0 setImage:[GameUtility imageNamed:PROGRESS_REAL]];
+    [self.expProgress.trackImage1 setImage:[GameUtility imageNamed:PROGRESS_VIRTUAL]];
+    [self.expProgress setInitState];
+}
+
+-(void)resetUpMainAttriViewData
+{
+    self.equipsForUpgrade = nil;
+    costMoney = 0;
+    addExp = 0;
+    [[self expProgress] setInitState];
+}
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+//
+// 这个方法是给外部调用的，只在GameUI类里调用
+// 是在界面弹出时做数据设置的工作。
+//
+-(void)showMainAttriView:(NSDictionary *)data
+{
+    if ([[self equipsForUpgrade] count] != 0)
+    {
+        [[GameObject sharedInstance] removeEquipsFromBagWithArray:self.equipsForUpgrade];
+    }
+    [self resetUpMainAttriViewData];
+    
+    if (costMoney != 0 )
+    {
+        [[[GameObject sharedInstance] player] reduceHeroMoney:costMoney];
+        [[GameUI sharedInstance] updateHallView];
+    }
+    
+    self.costMoneyLabel.text = @"0";
+    
+    [self clearViewControllers];
+    
+    if ([data objectForKey:@"PetId"])
+    {
+        self.petId = [data objectForKey:@"PetId"];
+    }
+    
+    if ([data objectForKey:@"EquipId"])
+    {
+        self.equipIdWillUp = [data objectForKey:@"EquipId"];
+        Equipment* equip = [[GameObject sharedInstance] getEquipWithEId:[self equipIdWillUp]];
+        
+        self.attriLevelLabel.text = [[[equip mainAttri] attriLevel] stringValue];
+        self.attriValueLabel.text = [[[equip mainAttri] attriValue] stringValue];
+        
+        NSString* iconName = [[AttriConfig share] getAttriIconWithId:[[equip mainAttri] attriId]];
+        [[self attriIcon] setImage:[GameUtility imageNamed:iconName]];
+        [[self attributeIcon] setAttriID:[[[equip mainAttri] attriId] intValue]];
+        
+        self.attriLevelForUpLabel.text = self.attriLevelLabel.text;
+        self.attriValueForUpLabel.text = self.attriValueLabel.text;
+        
+        UIImage* imageIcon = [GameUtility imageNamed:[equip getEquipIcon]];
+        [self.equipForUpgradeBtn setImage:imageIcon forState:UIControlStateNormal];
+        
+        float fCurExp = [[[equip mainAttri] attriExp] floatValue];
+        float fMaxExp = [[equip getMainAttributeMaxExp] floatValue];
+        [self.expProgress setProgress0:fCurExp/fMaxExp animated:NO];
+    }
+}
+
+-(void)clearViewControllers
+{
+    self.equipItem01.selected = NO;
+    self.equipItem02.selected = NO;
+    self.equipItem03.selected = NO;
+    self.equipItem04.selected = NO;
+    self.equipItem05.selected = NO;
+    self.equipItem06.selected = NO;
+    
+    self.equipsForUpgrade = nil;
+    costMoney = 0;
+    addExp = 0;
+}
+
+//-(void)setEquipsForUpgrade:(NSArray *)equipsForUpgrade
+//{
+//    self.equipsForUpgrade = equipsForUpgrade;
+//}
+
+#pragma mark - Button events Actions
+//
+// 特别注意：
+// 注意 假设身上装备序号为1~8，那么这里的升级材料装备序号为 101~108.
+//
+- (IBAction)onSelectEquip01:(id)sender
+{
+    [self sendViewNotification];
+}
+- (IBAction)onSelectEquip02:(id)sender
+{
+    [self sendViewNotification];
+}
+- (IBAction)onSelectEquip03:(id)sender
+{
+    [self sendViewNotification];
+}
+- (IBAction)onSelectEquip04:(id)sender
+{
+    [self sendViewNotification];
+}
+- (IBAction)onSelectEquip05:(id)sender
+{
+    [self sendViewNotification];
+}
+- (IBAction)onSelectEquip06:(id)sender
+{
+    [self sendViewNotification];
+}
+
+-(void)sendViewNotification
+{
+    NSMutableDictionary* tempDict = [[NSMutableDictionary alloc]init];
+    [tempDict setObject:[self equipIdWillUp] forKey:@"EquipId"];
+    [[GameUI sharedInstance] showEquipSelectView:tempDict];
+    [self clearViewControllers];
+}
+
+- (IBAction)onAutoSelectClicked:(id)sender
+{
+    // 待续
+    NSArray* equips = [[[GameObject sharedInstance] bag] bagEquips];
+    
+    NSMutableDictionary* tempDict = [[NSMutableDictionary alloc] init];
+    SortParam* param1 = [[SortParam alloc]init];
+    param1.paramName = @"equipStar";
+    param1.ascending = YES;
+    [tempDict setObject:param1 forKey:@"0"];
+    
+    SortParam* param2 = [[SortParam alloc]init];
+    param2.paramName = @"equipTId";
+    param2.ascending = YES;
+    [tempDict setObject:param2 forKey:@"1"];
+    
+    SortParam* param3 = [[SortParam alloc]init];
+    param3.paramName = @"equipBV";
+    param3.ascending = YES;
+    [tempDict setObject:param3 forKey:@"2"];
+    
+    equips = [GameUtility array:equips sortArrayWithParams:tempDict];
+    
+    NSMutableArray* tempArr = [[NSMutableArray alloc] init];
+    for (Equipment* equip in equips)
+    {
+        if ([tempArr count] == 6)
+        {
+            break;
+        }
+        
+        [tempArr addObject:[equip equipEId]];
+    }
+    
+    costMoney = 0;
+    addExp = 0;
+    [self setOtherEquips:tempArr];
+}
+//
+// 升级 发送升级请求  并收回当前界面
+//
+- (IBAction)onUpgradeClicked:(id)sender
+{
+    if (self.equipsForUpgrade != nil && [self.equipsForUpgrade count] > 0)
+    {
+        NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]init];
+        NSMutableArray *tempArr = [[NSMutableArray alloc]init];
+        for (NSNumber* equipId in self.equipsForUpgrade)
+        {
+            [tempArr addObject:equipId];
+        }
+        [tempDict setObject:tempArr forKey:@"ID"];
+        [tempDict setObject:[self equipIdWillUp] forKey:@"EID"];
+        
+        [[PackageManager sharedInstance] upgradeEquipMainAttriRequest:tempDict];
+    }
+    else
+    {
+        [[GameUI sharedInstance] showError:@"请选择升级材料！！！！" title:@"error"];
+    }
+}
+- (IBAction)onCloseClicked:(id)sender
+{
+    [self resetUpMainAttriViewData];
+    [[GameUI sharedInstance] showEquipInfoView:nil];
+}
+
+#pragma mark - received 
+//
+// 接受消息 kNotif_View_SelectedEquips 的处理
+// 这个是从 CommonTableViewController 上发出的
+//
+//-(void)setOtherEquips:(NSNotification *)notify
+-(void)setOtherEquips:(NSArray*)equipIds
+{
+    self.equipsForUpgrade = equipIds;
+    
+    for (int i=0;i<[equipIds count]; i++)
+    {
+        NSNumber* equipId = [equipIds objectAtIndex:i];
+        Equipment* equip = [[GameObject sharedInstance] getEquipWithEId:equipId];
+        NSString* starImageName = [GameUtility getImageNameForEquipStrengthenWithStar:[equip.equipStar intValue]];
+        NSString* equipIconName = [equip getEquipIcon];
+        if (i == 0)
+        {
+            self.equipItem01.selected = YES;
+            [self.equipItem01 setBackgroundImage:[GameUtility imageNamed:starImageName] forState:UIControlStateSelected];
+            
+            [self.equipItem01 setImage:[GameUtility imageNamed:equipIconName] forState:UIControlStateSelected];
+        }
+        if (i == 1)
+        {
+            self.equipItem02.selected = YES;
+            [self.equipItem02 setBackgroundImage:[GameUtility imageNamed:starImageName] forState:UIControlStateSelected];
+            
+            [self.equipItem02 setImage:[GameUtility imageNamed:equipIconName] forState:UIControlStateSelected];
+        }
+        if (i == 2)
+        {
+            self.equipItem03.selected = YES;
+            [self.equipItem03 setBackgroundImage:[GameUtility imageNamed:starImageName] forState:UIControlStateSelected];
+            
+            [self.equipItem03 setImage:[GameUtility imageNamed:equipIconName] forState:UIControlStateSelected];
+        }
+        if (i == 3)
+        {
+            self.equipItem04.selected = YES;
+            [self.equipItem04 setBackgroundImage:[GameUtility imageNamed:starImageName] forState:UIControlStateSelected];
+            
+            [self.equipItem04 setImage:[GameUtility imageNamed:equipIconName] forState:UIControlStateSelected];
+        }
+        if (i == 4)
+        {
+            self.equipItem05.selected = YES;
+            [self.equipItem05 setBackgroundImage:[GameUtility imageNamed:starImageName] forState:UIControlStateSelected];
+            
+            [self.equipItem05 setImage:[GameUtility imageNamed:equipIconName] forState:UIControlStateSelected];
+        }
+        if (i == 5)
+        {
+            self.equipItem06.selected = YES;
+            [self.equipItem06 setBackgroundImage:[GameUtility imageNamed:starImageName] forState:UIControlStateSelected];
+            
+            [self.equipItem06 setImage:[GameUtility imageNamed:equipIconName] forState:UIControlStateSelected];
+        }
+
+        [self changeTotalExp:equip];
+    }
+}
+
+-(void)changeTotalExp:(Equipment*)equip
+{
+    addExp += ([[equip getMainAttributeBaseExp] integerValue] + [[equip getMainAttributeTotalExp] integerValue]* [[equip getMainAttributeRatio] floatValue]);
+    
+    [self updateMoneyByUpgrade];
+}
+-(void)updateMoneyByUpgrade
+{
+    costMoney = 0;
+    
+    Equipment* equip = [[GameObject sharedInstance] getEquipWithEId:[self equipIdWillUp]];
+    NSInteger curLv   = [[[equip mainAttri] attriLevel] integerValue];
+    NSInteger curExp  = [[[equip mainAttri] attriExp] integerValue];
+    
+    NSInteger leftExp = addExp;
+    do
+    {
+        NSInteger maxExp  = [[[MainAttriLvConfig share] getLevelMaxExpWithLv:INTEGER_TO_NUMBER(curLv) starNum:[equip equipStar]] integerValue];
+        NSNumber* moneyRatio = [[MainAttriLvConfig share] getMoneyRatioWithLv:INTEGER_TO_NUMBER(curLv) starNum:[equip equipStar]];
+        
+        if (leftExp+curExp > maxExp)
+        {
+            costMoney += (maxExp - curExp) * [moneyRatio integerValue];
+            leftExp -= (maxExp - curExp);
+            curLv++;
+            curExp = 0;
+        }
+        else
+        {
+            costMoney += leftExp * [moneyRatio integerValue];
+            leftExp = 0;
+        }
+        
+        if (curLv == [[[MainAttriLvConfig share] getMaxLevelWithStar:[equip equipStar]] integerValue])
+        {
+            break;
+        }
+    }while (leftExp > 0);
+    
+    self.attriLevelForUpLabel.text  = [NSString stringWithFormat:@"%lu", curLv];
+    self.costMoneyLabel.text        = [NSString stringWithFormat:@"%lu", costMoney];
+    
+    NSNumber* attriValue = [[AttriConfig share] getAttriValueWithId:[[equip mainAttri] attriId] withLv:INTEGER_TO_NUMBER(curLv) withStar:[equip equipStar]];
+    self.attriValueForUpLabel.text  = [attriValue stringValue];
+}
+@end
